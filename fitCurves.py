@@ -6,7 +6,6 @@
 from __future__ import print_function
 from numpy import *
 import bezier
-import sys
 
 
 # Fit one (ore more) Bezier curves to a set of points
@@ -158,8 +157,7 @@ def computeMaxError(points, bez, parameters):
 
 
 def normalize(v):
-    magnitude = np.sqrt(v.dot(v))
-    if magnitude < sys.float_info.epsilon:
+    magnitude = sqrt(v.dot(v))
+    if magnitude < finfo(np.float).eps:
         return v
     return v / magnitude
-
