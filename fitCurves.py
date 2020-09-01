@@ -6,6 +6,7 @@
 from __future__ import print_function
 from numpy import *
 import bezier
+import sys
 
 
 # Fit one (ore more) Bezier curves to a set of points
@@ -148,7 +149,7 @@ def computeMaxError(points, bez, parameters):
     maxDist = 0.0
     splitPoint = len(points)/2
     for i, (point, u) in enumerate(zip(points, parameters)):
-        dist = linalg.norm(bezier.q(bez, u)-point)**2
+        dist = ((bezier.q(bez, u) - point) ** 2).sum(-1)
         if dist > maxDist:
             maxDist = dist
             splitPoint = i
@@ -157,5 +158,8 @@ def computeMaxError(points, bez, parameters):
 
 
 def normalize(v):
-    return v / linalg.norm(v)
+    magnitude = np.sqrt(v.dot(v))
+    if magnitude < sys.float_info.epsilon:
+        return v
+    return v / magnitude
 
