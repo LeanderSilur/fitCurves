@@ -158,6 +158,6 @@ def computeMaxError(points, bez, parameters):
 
 def normalize(v):
     magnitude = sqrt(v.dot(v))
-    if magnitude < finfo(np.float).eps:
+    if magnitude < finfo(float).eps:
         return v
     return v / magnitude
